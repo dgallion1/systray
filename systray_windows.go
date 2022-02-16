@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package systray
@@ -257,8 +258,8 @@ func (t *winTray) wndProc(hWnd windows.Handle, message uint32, wParam, lParam ui
 		WM_CREATE     = 0x0001
 	)
 	switch message {
-	case WM_CREATE:
-		systrayReady()
+	// case WM_CREATE:
+	// 	systrayReady()
 	case WM_COMMAND:
 		menuItemId := int32(wParam)
 		// https://docs.microsoft.com/en-us/windows/win32/menurc/wm-command#menus
@@ -770,7 +771,7 @@ func registerSystray() {
 		log.Errorf("Unable to create menu: %v", err)
 		return
 	}
-
+	systrayReady()
 }
 
 func nativeLoop() {
